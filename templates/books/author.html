@@ -1,0 +1,58 @@
+{% extends "books/base.html" %}
+
+{% block title %}
+    Author | Book Management
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Author Details Section -->
+    <h2 class="text-center mb-4">{{ author.name }}'s Profile</h2>
+    
+    <div class="card shadow-lg p-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h5><strong>Name:</strong> {{ author.name }}</h5>
+                <p><strong>M.Sc:</strong> {{ author.Msc }}</p>
+                <p><strong>B.Sc:</strong> {{ author.Bsc }}</p>
+                <p><strong>Date of Birth:</strong> {{ author.birth_date|default:"N/A" }}</p>
+                <p><strong>Nationality:</strong> {{ author.nationality|default:"Unknown" }}</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="{% url 'home' %}" class="btn btn-primary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book List Section -->
+    <h2 class="text-center my-5">Books by {{ author.name }}</h2>
+    
+    <div class="row">
+        {% for book in books %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-lg">
+                    <img src="/media/{{ book.thumbnail }}" class="card-img-top" alt="{{ book.title }}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text"><strong>Category:</strong> {{ book.category }}</p>
+                        <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
+                        <p class="card-text"><strong>Published Date:</strong> {{ book.published_date }}</p>
+                        <p class="card-text">{{ book.descriptions|truncatewords:20 }}</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{{book.Source}}" class="btn btn-success" target="_blank">
+                            <i class="fas fa-book-open"></i> View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No books available for this author.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

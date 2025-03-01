@@ -1,0 +1,56 @@
+{% extends "books/base.html" %}
+
+{% block title %}
+    Book Management
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">📚 Book List</h2>
+
+    {% if books %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Published Date</th>
+                    <th>ISBN</th>
+                    <th>Category</th>
+                    <th>Availability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr class="text-center">
+                    <td>{{ forloop.counter }}</td>
+                    <td class="fw-bold">{{ book.title }}</td>
+                    <td>
+                        <a href="{% url 'author' book.author.id %}" class="text-decoration-none fw-bold text-primary">
+                            {{ book.author.name }}
+                        </a>
+                    </td>
+                    <td>{{ book.published_date }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.category }}</td>
+                    <td>
+                        {% if book.available %}
+                            <span class="badge bg-success">✔ Available</span>
+                        {% else %}
+                            <span class="badge bg-danger">❌ Not Available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center">
+        No books found in the database. 📖💡
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
