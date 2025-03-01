@@ -1,0 +1,55 @@
+{% extends "books/base.html" %}
+
+{% block title %}
+    {{ book.title }} | Book Details
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg p-4">
+        <div class="row">
+            <!-- Book Thumbnail -->
+            <div class="col-md-4 text-center">
+                {% if book.thumbnail %}
+                    <img src="{{ book.thumbnail.url }}" class="img-fluid rounded shadow" alt="{{ book.title }}" style="height: 300px; object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x400?text=No+Image" class="img-fluid rounded shadow" alt="No Image Available">
+                {% endif %}
+            </div>
+
+            <!-- Book Details -->
+            <div class="col-md-8">
+                <h1 class="text-primary">{{ book.title }}</h1>
+                <h4 class="text-muted">by <strong>{{ book.author }}</strong></h4>
+                <hr>
+
+                <p><strong>📅 Published Date:</strong> {{ book.published_date }}</p>
+                <p><strong>📚 Category:</strong> {{ book.category }}</p>
+                <p><strong>📖 ISBN:</strong> {{ book.isbn }}</p>
+                <p><strong>📌 Availability:</strong> 
+                    {% if book.available %}
+                        <span class="badge bg-success">Available</span>
+                    {% else %}
+                        <span class="badge bg-danger">Out of Stock</span>
+                    {% endif %}
+                </p>
+                
+                <h5 class="mt-4"><strong>📜 Description:</strong></h5>
+                <p class="text-justify">{{ book.descriptions|default:"No description available." }}</p>
+
+                <!-- View More or Purchase Link -->
+                {% if book.Source %}
+                    <a href="{{ book.Source }}" class="btn btn-outline-primary mt-3" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> View More
+                    </a>
+                {% endif %}
+
+                <!-- Back Button -->
+                <a href="{% url 'home' %}" class="btn btn-secondary mt-3">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

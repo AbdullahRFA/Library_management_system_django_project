@@ -42,7 +42,7 @@
                         <p class="card-text">{{ book.descriptions|truncatewords:20 }}</p>
                     </div>
                     <div class="card-footer text-center">
-                        <a href="{{book.Source}}" class="btn btn-success" target="_blank">
+                        <a href="{% url 'booksdetails' book.id %}" class="btn btn-success" target="_blank">
                             <i class="fas fa-book-open"></i> View Details
                         </a>
                     </div>

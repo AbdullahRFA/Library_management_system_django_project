@@ -19,3 +19,12 @@ def Author_details(request,id):
         'books':books
     }
     return render(request,"books/author.html",context)
+
+
+def Book_details(request,id):
+    book = get_object_or_404(Books, id=id)
+    context={
+        'book':book
+    }
+    
+    return render(request,"books/books_details.html",context)
